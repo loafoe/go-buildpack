@@ -225,4 +225,17 @@ describe 'CF Go Buildpack' do
       expect(app).to have_logged('See https://github.com/tools/godep for usage information.')
     end
   end
+
+  context 'a go app with wildcard matcher' do
+    let(:app_name) { 'go_app_with_wildcard_version/src/go_app' }
+
+    specify do
+      expect(app).to be_running
+      browser.visit_path('/')
+      expect(browser).to have_body('go, world')
+      expect(app).to have_logged(/Installing go1.4.3\.\.\. done/)
+      expect(app).to have_logged(/Downloaded \[https:\/\/.*\]/)
+    end
+  end
+
 end
